@@ -5,20 +5,20 @@ import toast  from 'react-hot-toast'
 
 export const AppContext=createContext()
 
-export const AppContextProvoder=({children})=>{
+export const AppContextProvider=({children})=>{
     
     const currency=import.meta.VITE_CURRENCY;
     const navigate=useNavigate();
     const [user, setUser]= useState(null);
     const [isSeller,setIsSeller]= useState(false);
     const [showUserlogin,setShowUserlogin]=useState(false);
-    const [product,setProduct]=useState([]);
+    const [products,setProducts]=useState([]);
 
     const [cartItems,setCartItems]=useState({});
  
     // to fetch all product from backend
     const fetchProduct=async()=>{
-        setProduct(dummyProducts);
+        setProducts(dummyProducts);
     }
     // to add product to cart
     const addToCart=(itemId)=>{
@@ -34,7 +34,7 @@ export const AppContextProvoder=({children})=>{
     }
 
     // update cart items
-    const updateCardItems=(itemId,quantity)=>{
+    const updateCardItem=(itemId,quantity)=>{
         let cartData=structuredClone(cartItems);
         cartData[itemId]=quantity;
         setCartItems(cartData);
@@ -42,7 +42,7 @@ export const AppContextProvoder=({children})=>{
     }
 
     // remove cart items
-    const removeCartItems=()=>{
+    const removeFromCart=(itemId)=>{
         let cartData=structuredClone(cartItems);
         if(cartData[itemId]){
              cartData[itemId]-=1;
@@ -54,12 +54,14 @@ export const AppContextProvoder=({children})=>{
         setCartItems(cartData)
        
     }
-    useEffect(()=>{
-        fetchProduct()
-    },[]);
+    useEffect(() => {
+  fetchProduct();
+  console.log("Loaded products:", dummyProducts); // 👈 Add this
+}, []);
 
-    const value={navigate,user, setUser,setIsSeller,isSeller,showUserlogin,setShowUserlogin,product,currency,updateCardItems, 
-        removeCartItems,addToCart,cartItems,setCartItems,setProduct};
+
+    const value={navigate,user, setUser,setIsSeller,isSeller,showUserlogin,setShowUserlogin,products,currency,updateCardItem, 
+        removeFromCart,addToCart,cartItems,setCartItems,setProducts};
 
     return <AppContext.Provider value={value}>
         {children}

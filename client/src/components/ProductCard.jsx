@@ -2,9 +2,9 @@ import React from "react";
 import { assets } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 
-const ProductCard = (product) => {
+const ProductCard = ({product}) => {
     const [count, setCount] = React.useState(0);
-    const {currency,addToCart,removeCartItems,cartItems,navigate} =useAppContext();
+    const {currency,addToCart,removeFromCart,cartItems,navigate} =useAppContext();
 
     return product && (
         <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-56 max-w-56 w-full">
@@ -28,13 +28,13 @@ const ProductCard = (product) => {
                     </p>
                     <div onClick={(e)=> {e.stopPropagation();}} className="text-indigo-500 ">
                         {!cartItems[product._id] ? (
-                            <button  className="flex items-center justify-center gap-1 bg-indigo-100 border border-indigo-300 md:w-[80px] w-[64px] h-[34px] rounded text-indigo-600 font-medium" onClick={() => setCount(1)} >
+                            <button  className="flex items-center justify-center gap-1 bg-primary/10 border border-primary/40 md:w-[80px] w-[64px] h-[34px] rounded text-indigo-600 font-medium" onClick={() => addToCart(product._id)} >
                                 <img src={assets.cart_icon} alt="cart icon" />
                                 Add
                             </button>
                         ) : (
                             <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-indigo-500/25 rounded select-none">
-                                <button onClick={() =>{removeCartItems(product._id)}} className="cursor-pointer text-md px-2 h-full" >
+                                <button onClick={() =>{removeFromCart(product._id)}} className="cursor-pointer text-md px-2 h-full" >
                                     -
                                 </button>
                                 <span className="w-5 text-center">{cartItems[product._id]}</span>
@@ -50,4 +50,4 @@ const ProductCard = (product) => {
     );
 };
 
-export default ProductCard
+export default ProductCard;
