@@ -1,33 +1,49 @@
+
 import { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import ProductCard from "../components/ProductCard";
 
 const ProductDetails = () => {
+   const { products, currency, addToCart } = useAppContext();
+   const { id } = useParams();
+   const navigate = useNavigate();
 
-   const {products,navigate,currency,addToCart}=useAppContext();
-   const {id}=useParams();
+   const [thumbnail, setThumbnail] = useState(null);
+   const [relatedProducts, setRelatedProducts] = useState([]);
 
-    const [relatedProducts, setRelatedProducts] = useState([]);
-    const [thumbnail, setThumbnail] = useState(null);
-
-    const product=products.find((item)=>item._id === id);
-    
-    useEffect(()=>{
-        if(product.length >0 ){
-            let productsCopy=products.slice();
-            productsCopy=productsCopy.filter((item)=>
-                item.category === product.category && item._id !== product._id
-            );
-            setRelatedProducts(productsCopy.slice(0,5));
-        }
-    },[products])
-
-    useEffect(()=>{
-        setThumbnail(product?.image[0]? product.image[0] :  null );
-    },[product])
+   // Find current product
+   const product = products.find((item) => item._id === id);
+   
+   // Calculate related products
+   useEffect(() => {
+     if (product) {
+       // Filter products from same category, excluding current product
+         const filtered = products.filter(item => 
+         item.category === product.category && 
+         item._id !== product._id
+       );
        
+       // Get up to 5 in-stock products
+       const inStockProducts = filtered
+         .filter(item => item.inStock)
+         .slice(0, 5);
+         
+        setRelatedProducts(inStockProducts);
+     }
+   }, [products, product]); 
+
+   // Set initial thumbnail
+    useEffect(() => {
+     if (product?.image?.length) {
+       setThumbnail(product.image[0]);
+    }
+    }, [product]);
+
+    if (!product) {
+     return <div>Loading product...</div>;
+    }
      
     return product && (
         <div className="mt-12">
@@ -96,11 +112,12 @@ const ProductDetails = () => {
                     <div className='w-20 h-0.5 bg-primary rounded-full mt-2'></div>
                 </div>
 
-                <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 lg:grid-cols-4 w-full'>
-                    {relatedProducts.filter((product) => product.inStock).map((product, index) => (
-                        
-                            <ProductCard key={index} product={product} />
-                    ))}
+               
+
+                 <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 lg:grid-cols-4 w-full mt-6'>
+                        {relatedProducts.map((product) => (
+                           <ProductCard key={product._id} product={product} />
+                     ))}
                 </div>
 
 
@@ -114,3 +131,7 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+

@@ -1,3 +1,6 @@
+
+
+
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
 import { useParams } from 'react-router-dom';
@@ -6,22 +9,46 @@ import ProductCard from '../components/ProductCard';
 
 const ProductCategory = () => {
   const { products } = useAppContext();
-  const category = useParams().category?.toLowerCase();
+  const { category } = useParams();
+  const normalizedCategory = category?.toLowerCase();
 
   if (!products) {
     return <p className='text-center mt-20'>Loading...</p>;
   }
 
-  const searchCategory = categories.find(item => item.path.toLowerCase() === category);
-  const filteredProducts = products.filter(
-    product => product.path.toLowerCase() === category
+  const searchCategory = categories.find(
+    item => item.path.toLowerCase() === normalizedCategory
+  );
+
+  // Debugging: Log values to console
+  console.log("Category from URL:", normalizedCategory);
+  console.log("Matching category object:", searchCategory);
+  console.log("All categories:", categories);
+
+  const filteredProducts = products.filter(product => 
+    product.path && 
+    typeof product.path === 'string' && 
+    product.path.toLowerCase() === normalizedCategory
   );
 
   return (
+    
+
     <div className='mt-16'>
-      {searchCategory && (
+    
+      {searchCategory ? (
         <div className='flex flex-col items-end w-max'>
           <p className='text-2xl font-medium'>{searchCategory.text.toUpperCase()}</p>
+          <div className='w-16 h-0.5 bg-primary rounded-full'></div>
+        </div>
+      ) : (
+        <div className='flex flex-col items-end w-max'>
+          <p className='text-2xl font-medium'>
+            {normalizedCategory 
+              ? normalizedCategory.replace(/-/g, ' ').toUpperCase() 
+              : 'CATEGORY'
+            }
+          </p>
           <div className='w-16 h-0.5 bg-primary rounded-full'></div>
         </div>
       )}
@@ -34,10 +61,11 @@ const ProductCategory = () => {
         </div>
       ) : (
         <div className='flex items-center justify-center h-48'>
-          <p className='text-2xl font-medium text-primary'>No products of this category</p>
+          <p className='text-2xl font-medium text-primary'>No products in this category</p>
         </div>
       )}
     </div>
+    
   );
 };
 
