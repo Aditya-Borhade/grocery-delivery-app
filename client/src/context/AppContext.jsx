@@ -53,16 +53,39 @@ export const AppContextProvider=({children})=>{
         }
         toast.success("Removed from cart");
         setCartItems(cartData)
-       
     }
+
+    //to get cart items count 
+     const getCartCount=()=>{
+        let totalCount=0;
+        for(const item in cartItems){
+            totalCount+=cartItems[item];
+        }
+        return totalCount;
+     }
+
+     // to get cart total amount 
+     const getCartAmount=()=>{
+        let totalAmount=0;
+        for(const items in cartItems){
+            let iteminfo=products.find((product)=>products._id === items);
+            if(cartItems[items] > 0){
+                totalAmount+=iteminfo.offerPrice*cartItems[items];
+            }
+        }    
+        return Math.floor(totalAmount*100)/100;
+     }
+     
+
+
     useEffect(() => {
-  fetchProduct();
-  console.log("Loaded products:", dummyProducts); // 👈 Add this
-}, []);
+         fetchProduct();
+          //console.log("Loaded products:", dummyProducts); // 👈 Add this
+    }, []);
 
 
     const value={navigate,user, setUser,setIsSeller,isSeller,showUserlogin,setShowUserlogin,products,currency,updateCardItem, 
-        removeFromCart,addToCart,cartItems,setCartItems,setProducts,searchQuery , setSearchQuery};
+        removeFromCart,addToCart,cartItems,setCartItems,setProducts,searchQuery , setSearchQuery, getCartCount, getCartAmount};
 
     return <AppContext.Provider value={value}>
         {children}

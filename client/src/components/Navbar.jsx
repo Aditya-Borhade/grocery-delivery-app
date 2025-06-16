@@ -5,7 +5,7 @@ import { useAppContext } from '../context/AppContext';
 
 function Navbar() {
     const [open, setOpen] = React.useState(false);
-    const {user , setUser,showUserlogin,setShowUserlogin,navigate, searchQuery,setSearchQuery}=useAppContext();
+    const {user , setUser,showUserlogin,setShowUserlogin,navigate, searchQuery,setSearchQuery,getCartCount}=useAppContext();
     
 
     const logout=async()=>{
@@ -39,7 +39,7 @@ function Navbar() {
 
                 <div onClick={()=>navigate('/cart')} className="relative cursor-pointer">
                     <img src={assets.nav_cart_icon} alt=""cart className='w-6 opacity-80' />
-                    <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">3</button>
+                    <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
                 </div>
                 
                 { !user ?(
@@ -59,10 +59,19 @@ function Navbar() {
 
             </div>
 
-            <button onClick={() => open ? setOpen(false) : setOpen(true)} aria-label="Menu" className="sm:hidden">
+            <div className='flex items-center gap-6 sm:hidden'>
+                 <div onClick={()=>navigate('/cart')} className="relative cursor-pointer">
+                    <img src={assets.nav_cart_icon} alt=""cart className='w-6 opacity-80' />
+                    <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
+                </div>
+              
+                <button onClick={() => open ? setOpen(false) : setOpen(true)} aria-label="Menu" className="sm:hidden">
                 {/* Menu Icon SVG */}
-              <img src={assets.menu_icon} alt="menu" />
-            </button>
+                 <img src={assets.menu_icon} alt="menu" />
+                </button>
+            </div>
+
+           
 
             {/* Mobile Menu */}
             { open && (
