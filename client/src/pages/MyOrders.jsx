@@ -54,7 +54,7 @@ const MyOrders = () => {
                     </div>
                         
                        <p className='text-primary text-lg font-medium'>
-                          Amount:  {item.product.offerPrice*item.quantity}
+                          Amount:  {currency}{item.product.offerPrice*item.quantity}
                         </p> 
                    </div>
                 
