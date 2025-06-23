@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { assets } from "../../assets/assets";
+import { assets, categories } from "../../assets/assets";
 const AddProduct = () => {
 
     const [files, setFiles] =useState([]);
@@ -45,9 +45,9 @@ const AddProduct = () => {
                     <select onChange={(e)=> setCategory(e.target.value)}  value={category}
                     id="category" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40">
                         <option value="">Select Category</option>
-                        {[{ name: 'Electronics' }, { name: 'Clothing' }, { name: 'Accessories' }].map((item, index) => (
-                            <option key={index} value={item.name}>{item.name}</option>
-                        ))}
+                         {categories.map((item,index)=>(
+                            <option key={index} value={item.path}>{item.path}</option>
+                         ))}
                     </select>
                 </div>
                 <div className="flex items-center gap-5 flex-wrap">
@@ -60,7 +60,7 @@ const AddProduct = () => {
                         <input onChange={(e)=> setOfferPrice(e.target.value)}  value={offerPrice} id="offer-price" type="number" placeholder="0" className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40" required />
                     </div>
                 </div>
-                <button className="px-8 py-2.5 bg-indigo-500 text-white font-medium rounded">ADD</button>
+                <button className="px-8 py-2.5 bg-primary text-white font-medium rounded cursor-pointer">ADD</button>
             </form>
         </div>
     );
