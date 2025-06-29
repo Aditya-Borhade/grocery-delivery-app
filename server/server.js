@@ -3,6 +3,8 @@ import express from "express";
 import cors from 'cors';
 import connectDB from "./configs/db.js";
 import 'dotenv/config';
+import userRouter from "./routes/userRoute.js";
+import sellerRouter from "./routes/sellerRoute.js";
 const app=express();
 
 await connectDB();
@@ -19,6 +21,8 @@ app.use(cors({origin:allowedOrigins,credentials:true}))
 app.get("/",(req,res)=>{
     res.send("api is working ");
 })
+app.use('/api/user', userRouter);
+app.use('/api/seller',sellerRouter);
 
 app.listen(port,(req,res)=>{
     console.log(`app is running on a port number  ${port}`)
