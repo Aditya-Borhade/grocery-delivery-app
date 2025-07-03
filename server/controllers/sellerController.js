@@ -25,12 +25,12 @@ export const sellerLogin=async(req,res)=>{
 }
 
 // check auth 
-export const issellerAuth=async(res,req)=>{
+export const issellerAuth=async(req,res)=>{
     try{
-      return res.json({success: true, user});
+      return res.json({success: true});
     }catch(error){
        console.log(error.message);
-        res.json({success:false, message:error.message});
+       res.json({success:false, message:error.message});
     }
 }
 

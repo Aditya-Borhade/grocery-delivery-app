@@ -22,9 +22,10 @@ const port=process.env.PORT || 4000;
 const allowedOrigins =['http://localhost:5173']
 
 // middleware configuration 
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors({origin:allowedOrigins,credentials:true}))
+app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(express.json()); 
+app.use(cookieParser()); 
+
 
 app.get("/",(req,res)=>{
     res.send("api is working ");

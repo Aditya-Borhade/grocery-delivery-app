@@ -1,10 +1,11 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import { useAppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
 
 const SellerLayout = () => {
 
-   const {setIsSeller} =useAppContext();
+   const {setIsSeller,axios, navigate} =useAppContext();
     
 
     const sidebarLinks = [
@@ -14,14 +15,24 @@ const SellerLayout = () => {
     ];
      
     const logout=async()=>{
-        setIsSeller(false);
+        try{
+             const {data} = await axios.get('/api/seller/logout');
+             if(data.success){
+                toast.success(data.message);
+                navigate('/')
+             }else{
+                toast.error(data.message);
+             }
+        }catch(error){
+             toast.error(error.message);
+        }
     }
     
     return (
         <>
             <div className="flex items-center justify-between px-4 md:px-8 border-b border-gray-300 py-3 bg-white ">
                 <Link to="/">
-                    <img src={assets.logo} alt='logo' className='cursor-pointer w-34 md:w-38' />
+                    <img src={assets.logo} alt='logo' className='cursor-pointer w-32 md:w-40' />
                 </Link>
                 <div className="flex items-center gap-5 text-gray-500">
                     <p>Hi! Admin</p>
