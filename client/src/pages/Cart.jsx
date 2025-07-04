@@ -12,12 +12,14 @@ const Cart = () => {
     navigate,
     removeFromCart,
     cartItems,
+    axios,
+    user,
   } = useAppContext();
 
   const [cartArray, setCartArray] = useState([]);
-  const [Address, setAddress] = useState(dummyAddress);
+  const [Address, setAddress] = useState([]);
   const [showAddress, setShowAddress] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentOption, setPaymentOption] = useState("COD");
 
   const getCart = () => {
@@ -32,6 +34,26 @@ const Cart = () => {
     setCartArray(tempArray);
   };
 
+
+  const getUserAddress = async()=>{
+      try{
+        const {data} = await axios.get('/api/address/get');
+
+        if(data.success){
+            setAddress(data.addresses);
+            if(data.addresses.length >0){
+              setSelectedAddress(data.addresses[0]);
+            }
+        }
+        else{
+          toast.error(data.message);
+
+        }
+      }catch(error){
+         toast.error(error.message);
+      }
+  }
+
   const placeOrder=async()=>{
     
   }
@@ -41,6 +63,12 @@ const Cart = () => {
       getCart();
     }
   }, [products, cartItems]);
+
+   useEffect(()=>{
+      if(user){
+        getUserAddress();
+      }
+   },[user])
 
   return products.length > 0 && cartArray.length > 0 ? (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
