@@ -36,25 +36,45 @@ export const AppContextProvider = ({ children }) => {
                 setIsSeller(false);
         }
     }
+    
+    // fetch user auth status 
+     const fetchUser = async()=>{
+        try{
+            const {data} = await axios.get('/api/user/is-auth');
+            if(data.success){
+              setUser(data.user);
+              setCartItems(data.user.cartItems);
+            }
+        }catch(error){
+                    setUser(null);
+        }
+     }
+
 
     // fetch all products
-    const fetchProducts = async () =>{
-       try{
-         const {data} = await axios.get('/api/product/list');
-         if(data.succces){
-            setProducts(data.products);
-         }else{
-            toast.error(data.message);
-         }
-       }catch(error){
-            toast.error(error.message);
-       }
+    const fetchProducts = async () => {
+  try {
+    const { data } = await axios.get("/api/product/list");
+    console.log("📦 API Response:", data);
+
+    if (data.success) {
+      setProducts(data.products);
+      console.log("✅ Products set in context:", data.products);
+    } else {
+      console.error("❌ API success false:", data.message);
     }
+
+  } catch (err) {
+    console.error("❌ Error fetching products:", err.message);
+  }
+};
+
       
 
 
 
   useEffect(() => {
+    fetchUser();
     fetchSeller();
     fetchProducts();
   }, []);

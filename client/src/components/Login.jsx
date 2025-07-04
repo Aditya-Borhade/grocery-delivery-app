@@ -4,19 +4,32 @@ import { useAppContext } from '../context/AppContext';
 
 const Login = () => {
  
-    const {setShowUserlogin,setUser} =useAppContext();
+    const {setShowUserlogin,setUser,axios,navigate} =useAppContext();
     const [state, setState] = React.useState("login");
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const submithandler=(e)=>{
-          e.preventDefault();
-          setUser({
-            email:"virat@gmail.com",
-            name:"Virat",
-          })
-          setShowUserlogin(false)
+    const submithandler=async(e)=>{
+        try{
+            e.preventDefault();
+            
+            const {data} = await axios.post(`/api/user/${state}`,{
+                name,email,password
+            });
+            if(data.success){
+                 navigate('/');
+                 setUser(data.user)
+                 setShowUserlogin(false)
+            }else{
+                  toast.error(data.message)
+            }
+        }catch(error){
+                    toast.error(error.message)
+        }
+        
+          
+          
     }
   return (
     <div onClick={()=>setShowUserlogin(false)} className='fixed top-0 bottom-0 left-0 right-0  z-30 flex items-center text-sm text-gray-600 bg-black/50'>
