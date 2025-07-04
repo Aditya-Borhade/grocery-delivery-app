@@ -148,7 +148,8 @@ export const AppContextProvider = ({ children }) => {
         searchQuery,
         setSearchQuery,
         axios,
-        fetchProducts
+        fetchProducts,
+        setCartItems,
       }}
     >
       {children}
