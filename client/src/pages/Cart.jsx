@@ -71,14 +71,21 @@ const Cart = () => {
         }
         // place order with cod 
         if(paymentOption === "COD"){
-           const {data}= await axios.post('/api/order/cod',{
-            userId : user_id,
-            items : cartArray.map(item=> ({
-              product : item_id,
-              quantity : item.quantity,
-            })),
-            address : selectedAddress._id
-           })
+          
+           const {data}=await axios.post(
+                           '/api/order/cod',
+                         {
+                             items: cartArray.map((item) => ({
+                                   product: item._id,
+                                   quantity: item.quantity,
+                           })),
+                        address: selectedAddress._id,
+                        },
+                         {
+                            withCredentials: true, 
+                        }
+                      )
+           
 
            if(data.success){
                toast.success(data.message);
@@ -91,9 +98,9 @@ const Cart = () => {
            
           //place order with stripe 
            const {data}= await axios.post('/api/order/stripe',{
-            userId : user_id,
+            userId : user._id,
             items : cartArray.map(item=> ({
-              product : item_id,
+              product : item._id,
               quantity : item.quantity,
             })),
             address : selectedAddress._id

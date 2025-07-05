@@ -74,7 +74,7 @@ export const login=async(req,res)=>{
 
 
 // check auth 
-export const isAuth=async(res,req)=>{
+export const isAuth=async(req,res)=>{
     try{
       const {userId} =req.body;
       const user= await User.findById(userId).select("-password");
