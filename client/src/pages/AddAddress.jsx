@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import { assets } from '../assets/assets';
 import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
 
 const inputField = (type, name, placeholder, handleChange, address) => (
   <input
@@ -20,13 +21,13 @@ const AddAddress = () => {
  const {axios, user, navigate} = useAppContext();
 
   const [address, setAddress] = useState({
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     street: '',
     city: '',
     state: '',
-    zipcode: '',
+    zipCode: '',
     country: '',
     phone: '',
     address1: '',
@@ -35,6 +36,7 @@ const AddAddress = () => {
   });
 
   const handleChange = (e) => {
+     e.preventDefault();
     const { name, value } = e.target;
     setAddress((prev) => ({
       ...prev,
@@ -44,16 +46,24 @@ const AddAddress = () => {
 
   const onSubmitHandler = async(e) => {
        e.preventDefault();
+        console.log("Submitting address:", address);
     try{
-         const {data} = await axios.post('/api/address/add',{address});
+         //const {data} = await axios.post('/api/address/add',{address});
+         const { data } = await axios.post(
+                '/api/address/add',
+                { address },
+                { withCredentials: true } 
+               );
 
+              console.log("Response from backend:", data);
          if(data.success){
              toast.success(data.message);
-             navigate('/cart');
+              navigate('/cart', { state: { refresh: true } });
          }else{
              toast.error(data.message);
          }
     }catch(error){
+                 console.log("Error while saving address:", error);
             toast.error(error.message);
     }
     
@@ -77,8 +87,8 @@ const AddAddress = () => {
           <form onSubmit={onSubmitHandler} className='space-y-3 mt-6 text-sm'>
 
             <div className='grid grid-cols-2 gap-4'>
-              {inputField('text', 'firstname', 'First Name', handleChange, address)}
-              {inputField('text', 'lastname', 'Last Name', handleChange, address)}
+              {inputField('text', 'firstName', 'First Name', handleChange, address)}
+              {inputField('text', 'lastName', 'Last Name', handleChange, address)}
             </div>
 
             {inputField('email', 'email', 'Email Address', handleChange, address)}
@@ -90,7 +100,7 @@ const AddAddress = () => {
             </div>
 
             <div className='grid grid-cols-2 gap-4'>
-              {inputField('number', 'zipcode', 'Zip Code', handleChange, address)}
+              {inputField('number', 'zipCode', 'Zip Code', handleChange, address)}
               {inputField('text', 'country', 'Country', handleChange, address)}
             </div>
 

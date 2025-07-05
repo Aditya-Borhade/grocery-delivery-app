@@ -1,6 +1,9 @@
 import { assets, dummyAddress } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 import { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
+import toast from "react-hot-toast";
+
 
 const Cart = () => {
   const {
@@ -38,9 +41,15 @@ const Cart = () => {
 
   const getUserAddress = async()=>{
       try{
-        const {data} = await axios.get('/api/address/get');
+        //const {data} = await axios.get('/api/address/get');
+         const { data } = await axios.get('/api/address/get', {
+         withCredentials: true, 
+          });
 
         if(data.success){
+
+          console.log("Fetched addresses:", data.addresses);       
+          console.log("Selected address:", data.addresses[0]);  
             setAddress(data.addresses);
             if(data.addresses.length >0){
               setSelectedAddress(data.addresses[0]);
@@ -108,11 +117,14 @@ const Cart = () => {
     }
   }, [products, cartItems]);
 
-   useEffect(()=>{
-      if(user){
-        getUserAddress();
-      }
-   },[user])
+const location = useLocation();
+
+useEffect(() => {
+  if (user) {
+    getUserAddress();
+  }
+}, [user, location.state?.refresh]);
+
 
   return products.length > 0 && cartArray.length > 0 ? (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
