@@ -2,6 +2,7 @@ import Order from '../models/Order.js';
 import Product from '../models/Product.js'
 import stripe from "stripe"
 import User from '../models/User.js';
+
 // to placeOrder on COD
 
 export const placeOrderCOD = async (req, res) =>{
@@ -106,7 +107,6 @@ export const placeOrderStripe = async (req, res) => {
 };
 
   
-
 //stripe webhook to verify payment action 
 export const stripeWebhooks= async(request, response)=>{
      // stripe gateway initialize
@@ -165,11 +165,6 @@ export const stripeWebhooks= async(request, response)=>{
         response.json({received:true});
         
 }
-
-
-
-
-
 
 
 // get orders by users Id

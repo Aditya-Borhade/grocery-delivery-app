@@ -61,4 +61,4 @@ const SellerLogin = () => {
   )
 }
 
-export default SellerLogin
+export default SellerLogin;

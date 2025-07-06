@@ -27,4 +27,4 @@ const BottomBanner = () => {
   )
 }
 
-export default BottomBanner
+export default BottomBanner;
