@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
@@ -10,9 +11,9 @@ const Login = () => {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
 
-    const submithandler=async(e)=>{
+    const submithandler=async(event)=>{
         try{
-            e.preventDefault();
+            event.preventDefault();
             
             const {data} = await axios.post(`/api/user/${state}`,{
                 name,email,password

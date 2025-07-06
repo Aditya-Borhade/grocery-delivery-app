@@ -98,13 +98,13 @@ function Navbar() {
 
             {/* Mobile Menu */}
             { open && (
-            <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}>
-                <NavLink to="/" onClick={()=>setOpen(flase)}>Home</NavLink>
-                <NavLink to="/products" onClick={()=>setOpen(flase)}>All Products</NavLink>
+            <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden z-50`}>
+                <NavLink to="/" onClick={()=>setOpen(false)}>Home</NavLink>
+                <NavLink to="/products" onClick={()=>setOpen(false)}>All Products</NavLink>
                 { user &&
-                <NavLink to="/products" onClick={()=>setOpen(flase)}>All Orders</NavLink>
+                <NavLink to="/products" onClick={()=>setOpen(false)}>All Orders</NavLink>
                 }
-                <NavLink to="/" onclick={()=>setOpen(flase)}>Contact</NavLink>
+                <NavLink to="/" onclick={()=>setOpen(false)}>Contact</NavLink>
 
                 { !user ? (
                     <button onClick={()=>{
