@@ -84,7 +84,7 @@ function Navbar() {
 
             <div className='flex items-center gap-6 sm:hidden'>
                  <div onClick={()=>navigate('/cart')} className="relative cursor-pointer">
-                    <img src={assets.nav_cart_icon} alt=""cart className='w-6 opacity-80' />
+                    <img src={assets.nav_cart_icon} alt="cart" className='w-6 opacity-80' />
                     <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">{getCartCount()}</button>
                 </div>
               
@@ -102,7 +102,7 @@ function Navbar() {
                 <NavLink to="/" onClick={()=>setOpen(false)}>Home</NavLink>
                 <NavLink to="/products" onClick={()=>setOpen(false)}>All Products</NavLink>
                 { user &&
-                <NavLink to="/products" onClick={()=>setOpen(false)}>All Orders</NavLink>
+                <NavLink to="/my-orders" onClick={()=>setOpen(false)}>All Orders</NavLink>
                 }
                 <NavLink to="/" onclick={()=>setOpen(false)}>Contact</NavLink>
 
