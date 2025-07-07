@@ -170,9 +170,9 @@ export const footerLinks = [
     title: "Follow Us",
     links: [
       { text: "Instagram", url: "#" },
-      { text: "Twitter", url: "#" },
-      { text: "Facebook", url: "#" },
-      { text: "YouTube", url: "#" },
+      { text: "Twitter", url: "https://x.com/1828Aditya" },
+      { text: "linkedin", url: "https://www.linkedin.com/in/aditya-borhade-9489712a4/" },
+      { text: "github", url: "https://github.com/Aditya-Borhade" },
     ],
   },
 ];

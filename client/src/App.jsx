@@ -20,6 +20,7 @@ import AddProduct from './pages/seller/AddProduct'
 import ProductList from './pages/seller/ProductList'
 import Orders from './pages/seller/Orders'
 import Loading from './components/Loading'
+import ContactPage from './pages/ContactPage'
 
 const App = () => {
   const { showUserlogin , isSeller} = useAppContext();
@@ -36,7 +37,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<AllProducts />} />
-         
+          <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/products/:category" element={<ProductCategory />} />
           <Route path="/products/:category/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart/>} />

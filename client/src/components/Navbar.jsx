@@ -52,7 +52,7 @@ function Navbar() {
 
                 <NavLink to="/">Home</NavLink>
                 <NavLink to="/products">All Product</NavLink>
-                <NavLink to="/">Contact</NavLink>
+                <NavLink to="/contact-us">Contact</NavLink>
     
 
                 <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">

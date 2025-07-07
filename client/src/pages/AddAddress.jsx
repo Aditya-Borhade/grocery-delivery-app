@@ -48,7 +48,7 @@ const AddAddress = () => {
        e.preventDefault();
         console.log("Submitting address:", address);
     try{
-         //const {data} = await axios.post('/api/address/add',{address});
+        
          const { data } = await axios.post(
                 '/api/address/add',
                 { address },

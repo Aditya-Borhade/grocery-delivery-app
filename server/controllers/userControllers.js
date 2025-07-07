@@ -28,7 +28,6 @@ export const register=async(req,res)=>{
         
            maxAge: 24*7*60*60*1000,
        });
-
          return res.json({success:true, user:{email:user.email,name:user.name}})
     }catch(error){
         console.log(error.message);
