@@ -106,7 +106,7 @@ export default function ContactPage() {
                 </div>
                 <div className="ml-4">
                   <h3 className="text-lg font-semibold">Email</h3>
-                  <p className="mt-1 text-blue-100">contact@example.com</p>
+                  <p className="mt-1 text-blue-100"><a href="mailto:adityaborhade1828@gmail.com">adityaborhade1828@gmail.com</a></p>
                 </div>
               </div>
             
