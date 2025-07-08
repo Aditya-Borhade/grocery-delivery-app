@@ -1,5 +1,5 @@
 import cookieParser from "cookie-parser";
-import express from "express";
+import express, { application } from "express";
 import cors from 'cors';
 import connectDB from "./configs/db.js";
 import 'dotenv/config';
@@ -11,6 +11,7 @@ import cartRouter from "./routes/cartRoute.js";
 import addressRouter from "./routes/addressRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 import { stripeWebhooks } from "./controllers/orderController.js";
+import {  router } from "./routes/ContactRoute.js";
 const app=express();
 
 await connectDB();
@@ -40,6 +41,7 @@ app.use('/api/product', productRouter);
 app.use('/api/cart', cartRouter);
 app.use('/api/address',addressRouter);
 app.use('/api/order',orderRouter);
+app.use('/api',router)
 
 
 app.listen(port,(req,res)=>{

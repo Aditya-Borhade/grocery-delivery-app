@@ -2,6 +2,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaGithub } from 'react-icons/fa';
+import { useAppContext } from '../context/AppContext';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -18,11 +19,13 @@ export default function ContactPage() {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user types
+    
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
+
+  const {axios} = useAppContext();
 
   const validate = () => {
     const newErrors = {};
@@ -39,28 +42,54 @@ export default function ContactPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      setIsSubmitting(true);
+
+ 
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validate()) return;
+
+  setIsSubmitting(true);
+
+  const { name, email, subject, message } = formData;
+
+  try {
+    const { data } = await axios.post('/api/send-email', {
+      name,
+      email,
+      subject,
+      message,
+    });
+
+
+     if (data.success) {
+      setSubmitSuccess(true);
       
-      // Simulate form submission
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        
-        // Reset success message after 5 seconds
-        setTimeout(() => setSubmitSuccess(false), 5000);
-      }, 1500);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+
+      setErrors({});
+    } else {
+      toast.error('Failed to send message.');
     }
-  };
-     
-  useEffect(() => {
+  } catch (error) {
+    console.error('Error sending message:', error);
+    toast.error('Something went wrong.');
+   } finally {
+    setIsSubmitting(false);
+  }
+};
+
+useEffect(() => {
   if (submitSuccess) {
-    toast.success('Your message has been sent successfully.');
+     toast.success("Your Message Has Been Sent Successfully!")
+    const timer = setTimeout(() => {
+     
+      setSubmitSuccess(false); 
+  }, 2000);
+
+    return () => clearTimeout(timer);
   }
 }, [submitSuccess]);
+
     
 
 
