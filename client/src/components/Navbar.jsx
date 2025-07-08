@@ -104,8 +104,9 @@ function Navbar() {
                 { user &&
                 <NavLink to="/my-orders" onClick={()=>setOpen(false)}>All Orders</NavLink>
                 }
-                <NavLink to="/" onclick={()=>setOpen(false)}>Contact</NavLink>
-
+                <NavLink to="/contact-us" onclick={()=>setOpen(false)}>Contact</NavLink>
+                <NavLink to="/seller" onclick={()=>setOpen(false)}>Seller Dashboard</NavLink>
+                
                 { !user ? (
                     <button onClick={()=>{
                         setOpen(false);
