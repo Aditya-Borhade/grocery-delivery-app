@@ -40,13 +40,16 @@ function Navbar() {
 
             {/* Desktop Menu */}
             <div className="hidden sm:flex items-center gap-8">
+                
 
-                <Link
+                
+                      <Link
                   to="/seller"
                   className="bg-white text-gary-400 border border-gray-400 px-4 py-2 rounded-xl hover:bg-white hover:text-black transition text-sm sm:text-base"
                   >
                 Seller Dashboard
                 </Link>
+            
 
 
 

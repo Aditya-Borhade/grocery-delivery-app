@@ -1,6 +1,3 @@
-
-
-
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
 import { useParams } from 'react-router-dom';
@@ -20,52 +17,43 @@ const ProductCategory = () => {
     item => item.path.toLowerCase() === normalizedCategory
   );
 
-  // Debugging: Log values to console
-  console.log("Category from URL:", normalizedCategory);
-  console.log("Matching category object:", searchCategory);
-  console.log("All categories:", categories);
-
   const filteredProducts = products.filter(product => 
-    product.path && 
-    typeof product.path === 'string' && 
-    product.path.toLowerCase() === normalizedCategory
+    product.category && 
+    typeof product.category === 'string' && 
+    product.category.toLowerCase() === normalizedCategory
   );
 
   return (
-    
-
-    <div className='mt-16'>
-    
+    <div className="mt-16 px-4 sm:px-6 md:px-8 lg:px-12">
       {searchCategory ? (
-        <div className='flex flex-col items-end w-max'>
-          <p className='text-2xl font-medium'>{searchCategory.text.toUpperCase()}</p>
-          <div className='w-16 h-0.5 bg-primary rounded-full'></div>
+        <div className='flex flex-col items-end w-max mx-auto sm:mx-0'>
+          <p className='text-2xl sm:text-3xl md:text-4xl font-semibold'>{searchCategory.text.toUpperCase()}</p>
+          <div className='w-20 h-1 bg-primary rounded-full mt-1'></div>
         </div>
       ) : (
-        <div className='flex flex-col items-end w-max'>
-          <p className='text-2xl font-medium'>
+        <div className='flex flex-col items-end w-max mx-auto sm:mx-0'>
+          <p className='text-2xl sm:text-3xl md:text-4xl font-semibold'>
             {normalizedCategory 
               ? normalizedCategory.replace(/-/g, ' ').toUpperCase() 
               : 'CATEGORY'
             }
           </p>
-          <div className='w-16 h-0.5 bg-primary rounded-full'></div>
+          <div className='w-20 h-1 bg-primary rounded-full mt-1'></div>
         </div>
       )}
 
       {filteredProducts.length > 0 ? (
-        <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 mt-6'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 md:gap-6 mt-6'>
           {filteredProducts.map(product => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
       ) : (
         <div className='flex items-center justify-center h-48'>
-          <p className='text-2xl font-medium text-primary'>No products in this category</p>
+          <p className='text-xl sm:text-2xl font-medium text-primary'>No products in this category</p>
         </div>
       )}
     </div>
-    
   );
 };
 
