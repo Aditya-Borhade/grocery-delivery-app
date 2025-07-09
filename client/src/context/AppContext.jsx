@@ -23,7 +23,7 @@ export const AppContextProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   // fetch seller status
-
+  
     const fetchSeller = async () =>{
         try{
             const {data} = await axios.get('/api/seller/is-auth');
@@ -98,6 +98,8 @@ export const AppContextProvider = ({ children }) => {
         }
   },[cartItems])
 
+
+  // add to cart function
   const addToCart = (id) => {
     const data = { ...cartItems };
     data[id] = (data[id] || 0) + 1;

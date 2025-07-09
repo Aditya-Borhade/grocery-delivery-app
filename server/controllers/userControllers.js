@@ -43,13 +43,13 @@ export const login=async(req,res)=>{
       
       if(!email || !password)
          return res.json({success: false ,message:"email and password are required" });
-
+        
       const user = await User.findOne({email});
-
+       
       if(!user){
         return res.json({success: false ,message:" Invalid email or password" });
       }
-
+            
       const isMatch=await bcrypt.compare(password, user.password);
 
       if(!isMatch){
