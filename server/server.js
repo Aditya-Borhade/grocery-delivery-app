@@ -24,12 +24,14 @@ const port=process.env.PORT || 4000;
 const allowedOrigins =['http://localhost:5173','https://grocery-delivery-app-smoky.vercel.app']
 
 
-app.post('/stripe', express.raw({type:'application/json'}),stripeWebhooks)
+
 
 // middleware configuration 
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json()); 
 app.use(cookieParser()); 
+
+app.post('/stripe', express.raw({type:'application/json'}),stripeWebhooks)
 
 
 app.get("/",(req,res)=>{
