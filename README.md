@@ -10,8 +10,8 @@ It offers a smooth shopping experience with features like product browsing, cart
 - 🛒 Add to Cart and Quantity Management
 - 📦 Place Orders (COD and Stripe payment support)
 - 📜 Order History and Order Details View
-- 🧾 Invoice and Order Success / Failure UI
-- 🧑‍💼 Admin & Seller Dashboard (if applicable)
+- 🧾 Invoice and Order Success 
+- 🧑‍💼 Admin & Seller Dashboard 
 - 📱 Fully Responsive Design
 
 ## 🛠️ Tech Stack
